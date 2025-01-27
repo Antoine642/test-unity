@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
     private Vector2 _movement;
     private Rigidbody2D _rigidbody2D;
     [Range(3, 20)] // Slider in Unity
-    public float speed = 10f; // To declare float : finish by 'f'
+    public float speed = 7f; // To declare float : finish by 'f'
 
     private void Awake()
     {
