@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class RupeeManager : MonoBehaviour
@@ -7,10 +8,13 @@ public class RupeeManager : MonoBehaviour
     public Transform spawner;
     public Rupee prefab;
     public Transform container;
-    [Range(2, 10)]
-    public float spawnDelay = 2f;
+     // Slider in Unity (0 to 10) step 1 (integers)
+    [Range(0, 10)]
+
+    public float spawnDelay = 3f;
     private readonly List<Rupee> _rupees = new List<Rupee>();
     private Coroutine _spawnRoutine;
+    public event Action<Rupee> OnCollected;
 
     public void Start()
     {
@@ -43,18 +47,17 @@ public class RupeeManager : MonoBehaviour
     {
         rupee.OnCollected += RupeeCollectedHandler; // Subscribe to the event
         _rupees.Add(rupee); // Add the rupee to the list
-        Debug.Log("Rupee added : " + _rupees.Count); // Log the number of rupees
     }
 
     private void RemoveRupee(Rupee rupee)
     {
         rupee.OnCollected -= RupeeCollectedHandler; // Unsubscribe from the event (prevent memory leaks)
         _rupees.Remove(rupee); // Remove the rupee from the list
-        Debug.Log("Rupee removed : " + _rupees.Count); // Log the number of rupees
     }
 
     private void RupeeCollectedHandler(Rupee rupee)
     {
+        OnCollected?.Invoke(rupee); // Invoke the event
         RemoveRupee(rupee); // Remove the rupee
     }
 }
