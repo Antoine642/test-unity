@@ -5,6 +5,7 @@ public class UiManager : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI score;
     public TMPro.TextMeshProUGUI timer;
+    public TMPro.TextMeshProUGUI bestScore;
     public GameObject startButton;
     private GameManager _gm;
 
@@ -17,6 +18,7 @@ public class UiManager : MonoBehaviour
     {
         score.text = $"Score: {_gm.ScoreManager.score}";
         timer.text = $"{TimeSpan.FromSeconds(_gm.TimeManager.Remaining):mm\\:ss}"; // Update timer text
+        bestScore.text = $"Best: {_gm.ScoreManager.BestScore}";
     }
 
     public void StartGame()

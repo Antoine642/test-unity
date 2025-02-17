@@ -4,6 +4,7 @@ public class ScoreManager : MonoBehaviour
 {
     public int score { get; private set; }
     private GameManager _gm;
+    public int BestScore { get; private set; } = 0;
 
     private void Awake()
     {
@@ -11,10 +12,19 @@ public class ScoreManager : MonoBehaviour
         _gm.RupeeManager.OnCollected += RupeeCollectedHandler;
     }
 
+    private void Start()
+    {
+        BestScore = PlayerPrefs.GetInt("best-score", 0);
+    }
+
     private void RupeeCollectedHandler(Rupee rupee)
     {
         score ++;
-        Debug.Log($"Score: {score}");
+        if (score > BestScore)
+        {
+            BestScore = score;
+            PlayerPrefs.SetInt("best-score", BestScore);
+        }
     }
 
     private void OnDestroy()
