@@ -48,6 +48,7 @@ public class RupeeManager : MonoBehaviour
 
     private void RemoveRupee(Rupee rupee)
     {
+        rupee.OnCollected -= RupeeCollectedHandler; // Unsubscribe from the event (prevent memory leaks)
         _rupees.Remove(rupee); // Remove the rupee from the list
         Debug.Log("Rupee removed : " + _rupees.Count); // Log the number of rupees
     }
