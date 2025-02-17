@@ -32,7 +32,7 @@ public class ScoreManager : MonoBehaviour
         _gm.RupeeManager.OnCollected -= RupeeCollectedHandler;
     }
 
-    public void Reset()
+    public void StartGame()
     {
         score = 0;
     }

@@ -15,11 +15,6 @@ public class TimeManager : MonoBehaviour
         _gm = GameManager.Instance;
     }
 
-    public void Reset()
-    {
-        Remaining = duration;
-    }
-
     public void Update()
     {
         if (Running)
@@ -41,7 +36,7 @@ public class TimeManager : MonoBehaviour
 
     public void StartTimer()
     {
-        Reset();
+        Remaining = duration;
         Running = true;
     }
 

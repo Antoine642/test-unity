@@ -10,8 +10,8 @@ public class GameManager : MonoBehaviour
     public ScoreManager ScoreManager { get; private set; }
     public UiManager UiManager { get; private set; }
     public TimeManager TimeManager { get; private set; }
+    public AudioManager AudioManager { get; private set; }
     public Player player;
-    public Transform playerStartPosition;
     public bool IsGameStarted { get; private set; }
 
     private void Awake()
@@ -25,13 +25,8 @@ public class GameManager : MonoBehaviour
         ScoreManager = GetComponent<ScoreManager>();
         UiManager = GetComponent<UiManager>();
         TimeManager = GetComponent<TimeManager>();
+        AudioManager = GetComponent<AudioManager>();
     }
-
-    private void Start()
-    {
-       TimeManager.OnTimeUp += TimeUpHandler;
-    }
-
     private void TimeUpHandler()
     {
         StopGame();
@@ -40,12 +35,14 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        ScoreManager.Reset();
+        TimeManager.OnTimeUp += TimeUpHandler;
+
+        ScoreManager.StartGame();
         RupeeManager.ResetSpawning();
         UiManager.StartGame();
         TimeManager.StartTimer();
+        AudioManager.StartGame();
         UnfreezePlayer();
-        ResetPlayerPosition();
         IsGameStarted = true;
     }
 
@@ -55,6 +52,8 @@ public class GameManager : MonoBehaviour
         RupeeManager.ClearRupees();
         TimeManager.StopTimer();
         UiManager.StopGame();
+        AudioManager.StopGame();
+        ResetPlayerPosition();
         FreezePlayer();
         IsGameStarted = false;
     }
@@ -71,6 +70,7 @@ public class GameManager : MonoBehaviour
 
     private void ResetPlayerPosition()
     {
-        player.ResetPosition(playerStartPosition.position);
+        
+        player.ResetPosition(new Vector3(-9.42f, -3.2f, 0f));
     }
 }
