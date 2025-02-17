@@ -10,9 +10,10 @@ public class RupeeManager : MonoBehaviour
     public Transform container;
     [Range(0, 10)]
     public float spawnDelay = 3f;
-
+    public List<RupeeData> rupeeDataList = new List<RupeeData>();
     private readonly List<Rupee> _rupees = new List<Rupee>();
     private Coroutine _spawnRoutine;
+
     public event Action<Rupee> OnCollected;
 
     public void ResetSpawning()
@@ -51,9 +52,11 @@ public class RupeeManager : MonoBehaviour
 
     private void Spawn()
     {
-        var rupee = Instantiate(prefab, spawner.position, Quaternion.identity);
-        rupee.transform.parent = container;
-        AddRupee(rupee);
+        var data = rupeeDataList[UnityEngine.Random.Range(0, rupeeDataList.Count)]; // tirage o zor
+        var rupee = Instantiate(prefab, spawner.position, Quaternion.identity); // instanciation
+        rupee.transform.parent = container; // parentage
+        rupee.Data = data; // assignation des données
+        AddRupee(rupee); // ajout à la liste
     }
 
     private IEnumerator SpawnRoutine()

@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
 
     private void RupeeCollectedHandler(Rupee rupee)
     {
-        score ++;
+        score += rupee.Data.score;
         if (score > BestScore)
         {
             BestScore = score;

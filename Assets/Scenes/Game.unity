@@ -5864,6 +5864,10 @@ MonoBehaviour:
   prefab: {fileID: 3599367663673675507, guid: d35f941c3533e9642b797a9e12e58961, type: 3}
   container: {fileID: 345287637}
   spawnDelay: 2
+  rupeeDataList:
+  - {fileID: 11400000, guid: cf377ecba375cde488eaac58689ab8fa, type: 2}
+  - {fileID: 11400000, guid: bbfdf4f7e70e5da448c59e998c1efa49, type: 2}
+  - {fileID: 11400000, guid: 25666c36190de844199237bd5ca6b7c3, type: 2}
 --- !u!4 &1996698075
 Transform:
   m_ObjectHideFlags: 0
