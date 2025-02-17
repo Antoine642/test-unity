@@ -14,24 +14,40 @@ public class RupeeManager : MonoBehaviour
 
     public void Start()
     {
-        StartSpawning();
+        StartSpawning(); // Start the spawning
     }
 
     public void StartSpawning()
     {
-        _spawnRoutine = StartCoroutine(SpawnRoutine());
+        _spawnRoutine = StartCoroutine(SpawnRoutine()); // Start the coroutine
     }
 
     private void Spawn()
     {
+        // Instantiate the prefab
         var rupee = Instantiate(prefab, spawner.position, Quaternion.identity);
+        // Add the rupee to the list
+        AddRupee(rupee);
+        // Set the parent of the rupee to the container
         rupee.transform.parent = container;
     }
 
     private IEnumerator SpawnRoutine()
     {
-        Spawn();
-        yield return new WaitForSeconds(spawnDelay);
-        StartSpawning();
+        Spawn(); // Spawn a rupee
+        yield return new WaitForSeconds(spawnDelay); // Wait for the delay
+        StartSpawning(); // Start the spawning again
+    }
+
+    private void AddRupee(Rupee rupee)
+    {
+        _rupees.Add(rupee); // Add the rupee to the list
+        Debug.Log("Rupee added : " + _rupees.Count); // Log the number of rupees
+    }
+
+    private void RemoveRupee(Rupee rupee)
+    {
+        _rupees.Remove(rupee); // Remove the rupee from the list
+        Debug.Log("Rupee removed : " + _rupees.Count); // Log the number of rupees
     }
 }
