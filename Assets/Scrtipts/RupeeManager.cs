@@ -41,6 +41,7 @@ public class RupeeManager : MonoBehaviour
 
     private void AddRupee(Rupee rupee)
     {
+        rupee.OnCollected += RupeeCollectedHandler; // Subscribe to the event
         _rupees.Add(rupee); // Add the rupee to the list
         Debug.Log("Rupee added : " + _rupees.Count); // Log the number of rupees
     }
@@ -49,5 +50,10 @@ public class RupeeManager : MonoBehaviour
     {
         _rupees.Remove(rupee); // Remove the rupee from the list
         Debug.Log("Rupee removed : " + _rupees.Count); // Log the number of rupees
+    }
+
+    private void RupeeCollectedHandler(Rupee rupee)
+    {
+        RemoveRupee(rupee); // Remove the rupee
     }
 }
