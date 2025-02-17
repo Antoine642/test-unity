@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
         TimeManager = GetComponent<TimeManager>();
     }
 
-
-
+    private void Start()
+    {
+        TimeManager.StartTimer(); // Start the timer when the game starts
+    }
 }

@@ -8,7 +8,17 @@ public class TimeManager : MonoBehaviour
     public float Remaining { get; private set; }
     public bool Running { get; private set; }
     public event Action OnTimeUp;
+    private GameManager _gm;
 
+    private void Awake()
+    {
+        _gm = GameManager.Instance;
+    }
+
+    private void Start()
+    {
+        Reset();
+    }
     public void Reset()
     {
         Remaining = duration;

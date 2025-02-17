@@ -14,11 +14,6 @@ public class Player : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    void Start()
-    {
-        Debug.Log("Start Player");
-    }
-
     void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
