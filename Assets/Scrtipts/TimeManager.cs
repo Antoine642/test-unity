@@ -18,6 +18,7 @@ public class TimeManager : MonoBehaviour
     private void Start()
     {
         Reset();
+        StartTimer();
     }
     public void Reset()
     {
@@ -45,6 +46,7 @@ public class TimeManager : MonoBehaviour
 
     public void StartTimer()
     {
+        Reset();
         Running = true;
     }
 

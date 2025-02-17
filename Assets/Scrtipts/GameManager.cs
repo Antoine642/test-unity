@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public UiManager UiManager { get; private set; }
     public TimeManager TimeManager { get; private set; }
 
+
     private void Awake()
     {
         // si pas d'instance, on en crée celle-ci
@@ -23,8 +24,10 @@ public class GameManager : MonoBehaviour
         TimeManager = GetComponent<TimeManager>();
     }
 
-    private void Start()
+    public void StartGame()
     {
-        TimeManager.StartTimer(); // Start the timer when the game starts
+        ScoreManager.Reset();
+        RupeeManager.StartSpawning();
+        TimeManager.StartTimer();
     }
 }
