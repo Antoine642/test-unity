@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 
     public RupeeManager RupeeManager { get; private set; }
     public ScoreManager ScoreManager { get; private set; }
+    public UiManager UiManager { get; private set; }
+    public TimeManager TimeManager { get; private set; }
 
     private void Awake()
     {
@@ -17,8 +19,10 @@ public class GameManager : MonoBehaviour
 
         RupeeManager = GetComponent<RupeeManager>();
         ScoreManager = GetComponent<ScoreManager>();
+        UiManager = GetComponent<UiManager>();
+        TimeManager = GetComponent<TimeManager>();
     }
 
-    
+
 
 }
