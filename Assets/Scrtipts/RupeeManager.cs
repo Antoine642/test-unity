@@ -8,56 +8,79 @@ public class RupeeManager : MonoBehaviour
     public Transform spawner;
     public Rupee prefab;
     public Transform container;
-     // Slider in Unity (0 to 10) step 1 (integers)
     [Range(0, 10)]
-
     public float spawnDelay = 3f;
+
     private readonly List<Rupee> _rupees = new List<Rupee>();
     private Coroutine _spawnRoutine;
     public event Action<Rupee> OnCollected;
 
-    public void Start()
+    public void ResetSpawning()
     {
-        StartSpawning(); // Start the spawning
+        StopSpawning();
+        ClearRupees();
+        StartSpawning();
     }
 
-    public void StartSpawning()
+    private void StartSpawning()
     {
-        _spawnRoutine = StartCoroutine(SpawnRoutine()); // Start the coroutine
+        _spawnRoutine = StartCoroutine(SpawnRoutine());
+    }
+
+    public void StopSpawning()
+    {
+        if (_spawnRoutine != null)
+        {
+            StopCoroutine(_spawnRoutine);
+            _spawnRoutine = null;
+        }
+        else{
+            return;
+        }
+    }
+
+    public void ClearRupees()
+    {
+        StopSpawning();
+        for (var i = _rupees.Count - 1; i >= 0; i--)
+        {
+            RemoveRupee(_rupees[i]);
+        }
+        _rupees.Clear();
     }
 
     private void Spawn()
     {
-        // Instantiate the prefab
         var rupee = Instantiate(prefab, spawner.position, Quaternion.identity);
-        // Add the rupee to the list
-        AddRupee(rupee);
-        // Set the parent of the rupee to the container
         rupee.transform.parent = container;
+        AddRupee(rupee);
     }
 
     private IEnumerator SpawnRoutine()
     {
-        Spawn(); // Spawn a rupee
-        yield return new WaitForSeconds(spawnDelay); // Wait for the delay
-        StartSpawning(); // Start the spawning again
+        while (true)
+        {
+            Spawn();
+            yield return new WaitForSeconds(spawnDelay);
+        }
     }
 
     private void AddRupee(Rupee rupee)
     {
-        rupee.OnCollected += RupeeCollectedHandler; // Subscribe to the event
-        _rupees.Add(rupee); // Add the rupee to the list
+        rupee.OnCollected += RupeeCollectedHandler;
+        _rupees.Add(rupee);
     }
 
     private void RemoveRupee(Rupee rupee)
     {
-        rupee.OnCollected -= RupeeCollectedHandler; // Unsubscribe from the event (prevent memory leaks)
-        _rupees.Remove(rupee); // Remove the rupee from the list
+        rupee.OnCollected -= RupeeCollectedHandler;
+        _rupees.Remove(rupee);
+        Destroy(rupee.gameObject);
     }
 
     private void RupeeCollectedHandler(Rupee rupee)
     {
-        OnCollected?.Invoke(rupee); // Invoke the event
-        RemoveRupee(rupee); // Remove the rupee
+        OnCollected?.Invoke(rupee);
+        RemoveRupee(rupee);
     }
 }

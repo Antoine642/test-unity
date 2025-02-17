@@ -16,19 +16,47 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        if (GameManager.Instance.IsGameStarted)
+        {
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
 
-        _movement = new Vector2(horizontal, vertical).normalized;
+            _movement = new Vector2(horizontal, vertical).normalized;
 
-        _animator.SetFloat("Horizontal", horizontal);
-        _animator.SetFloat("Vertical", vertical);
-        _animator.SetFloat("Velocity", _movement.sqrMagnitude);
-
+            _animator.SetFloat("Horizontal", horizontal);
+            _animator.SetFloat("Vertical", vertical);
+            _animator.SetFloat("Velocity", _movement.sqrMagnitude);
+        }
+        else
+        {
+            _movement = Vector2.zero;
+        }
     }
 
     private void FixedUpdate()
     {
-        _rigidbody2D.linearVelocity = _movement * speed;
+        if (GameManager.Instance.IsGameStarted)
+        {
+            _rigidbody2D.linearVelocity = _movement * speed;
+        }
+        else
+        {
+            _rigidbody2D.linearVelocity = Vector2.zero;
+        }
+    }
+
+    public void ResetPosition(Vector3 startPosition)
+    {
+        transform.position = startPosition;
+    }
+
+    public void Freeze()
+    {
+        _animator.enabled = false;
+    }
+
+    public void Unfreeze()
+    {
+        _animator.enabled = true;
     }
 }

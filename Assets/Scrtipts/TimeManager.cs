@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    [Range(60f, 3600f)]
-    public float duration = 120f;
+    [Range(20f, 3600f)]
+    public float duration = 20f;
     public float Remaining { get; private set; }
     public bool Running { get; private set; }
     public event Action OnTimeUp;
@@ -15,11 +15,6 @@ public class TimeManager : MonoBehaviour
         _gm = GameManager.Instance;
     }
 
-    private void Start()
-    {
-        Reset();
-        StartTimer();
-    }
     public void Reset()
     {
         Remaining = duration;
@@ -39,7 +34,7 @@ public class TimeManager : MonoBehaviour
         if (Remaining <= 0f)
         {
             Remaining = 0f;
-            // Running = false;
+            Running = false;
             OnTimeUp?.Invoke();
         }
     }
